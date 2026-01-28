@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Wigikin - Your ultimate destination for the most hilarious and unique wigs. From rainbow afros to Anikin's legendary hair strand!">
+    <meta name="keywords" content="wigs, funny wigs, costume wigs, rainbow wig, unicorn wig, wigikin">
+    <title>Wigikin - Premium Funny Wigs & Anikin's Hair Strand</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">🎭 Wigikin</div>
+            <nav class="social-links">
+                <a href="https://discord.gg/5Ea478mexz" target="_blank" class="social-btn">
+                    💬 Discord
+                </a>
+                <a href="https://www.instagram.com/anikingamers/" target="_blank" class="social-btn">
+                    📸 Instagram
+                </a>
+                <a href="https://www.tiktok.com/@ttv.anikingamers" target="_blank" class="social-btn">
+                    🎵 TikTok
+                </a>
+                <a href="https://www.youtube.com/@anikingamers" target="_blank" class="social-btn">
+                    ▶️ YouTube
+                </a>
+            </nav>
+            <button class="cart-btn" id="cartBtn" aria-label="Shopping Cart">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section class="hero">
+            <h1>Welcome to Wigikin</h1>
+            <p>Discover the most hilarious and unique wigs in the universe. From rainbow explosions to legendary hair
+                strands!</p>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically inserted here -->
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" id="closeCart" aria-label="Close Cart">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛒</div>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" disabled>Checkout</button>
+        </div>
+    </aside>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Checkout</h2>
+                <button class="close-modal" id="closeModal" aria-label="Close Modal">×</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                To complete your order, join the Discord channel, go to the #general channel and send the following
+                message:
+            </p>
+            <div class="checkout-message" id="checkoutMessage">
+                <!-- Message will be generated here -->
+            </div>
+            <button class="copy-btn" id="copyBtn">📋 Copy Message</button>
+            <a href="https://discord.gg/5Ea478mexz" target="_blank" class="discord-link">
+                Join Discord Server
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
