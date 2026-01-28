@@ -122,7 +122,7 @@ const products = [
         description: "A wig but not a wig. Use this to impersonate anikin on Halloween ",
         price: 1.99,
         image: "images/bald_cap.webp",
-        outOfStock: true
+        outOfStock: false
     }
 ];
 
