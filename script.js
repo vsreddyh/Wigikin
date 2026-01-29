@@ -1,6 +1,14 @@
 // Product Data
 const products = [
     {
+        id: 1,
+        name: "Classic Black Elegance",
+        description: "Not in stock because Anikin always steals from the warehouse",
+        price: 28.99,
+        image: "images/black_wig.png",
+        outOfStock: true
+    },
+    {
         id: 13,
         name: "Rainbow Explosion",
         description: "A vibrant rainbow afro that'll make you the life of any party!",
@@ -84,14 +92,6 @@ const products = [
         description: "Long platinum blonde rocker hair. Air guitar skills not included but highly recommended!",
         price: 39.99,
         image: "images/metal_madness.png"
-    },
-    {
-        id: 1,
-        name: "Classic Black Elegance",
-        description: "Not in stock because Anikin always steals from the warehouse",
-        price: 28.99,
-        image: "images/black_wig.png",
-        outOfStock: true
     },
     {
         id: 14,
