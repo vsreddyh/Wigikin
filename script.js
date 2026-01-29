@@ -88,7 +88,7 @@ const products = [
     {
         id: 13,
         name: "Classic Black Elegance",
-        description: "Sleek and sophisticated black wig. Timeless style for any occasion!",
+        description: "Not in stock because Anikin always steals from the warehouse",
         price: 28.99,
         image: "images/black_wig.png",
         outOfStock: true
@@ -98,24 +98,21 @@ const products = [
         name: "Sunshine Yellow",
         description: "Bright and cheerful yellow wig that radiates positivity. Be the sunshine!",
         price: 29.99,
-        image: "images/yellow_wig.png",
-        outOfStock: true
+        image: "images/yellow_wig.png"
     },
     {
         id: 15,
         name: "Chocolate Brown",
         description: "Rich chocolate brown wig with natural shine. Sweet as can be!",
         price: 27.99,
-        image: "images/brown_wig.png",
-        outOfStock: true
+        image: "images/brown_wig.png"
     },
     {
         id: 16,
         name: "Fiery Red",
         description: "Bold and vibrant red wig that turns heads. Unleash your inner fire!",
         price: 30.99,
-        image: "images/red_wig.png",
-        outOfStock: true
+        image: "images/red_wig.png"
     },
     {
         id: 17,
