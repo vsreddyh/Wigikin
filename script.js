@@ -1,7 +1,7 @@
 // Product Data
 const products = [
     {
-        id: 1,
+        id: 13,
         name: "Rainbow Explosion",
         description: "A vibrant rainbow afro that'll make you the life of any party!",
         price: 29.99,
@@ -86,7 +86,7 @@ const products = [
         image: "images/metal_madness.png"
     },
     {
-        id: 13,
+        id: 1,
         name: "Classic Black Elegance",
         description: "Not in stock because Anikin always steals from the warehouse",
         price: 28.99,
