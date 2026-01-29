@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Wigikin - Your ultimate destination for the most hilarious and unique wigs. From rainbow afros to Anikin's legendary hair strand!">
-    <meta name="keywords" content="wigs, funny wigs, costume wigs, rainbow wig, unicorn wig, wigikin">
-    <title>Wigikin - Premium Funny Wigs & Anikin's Hair Strand</title>
+    <meta name="description" content="Wigikin Top Spenders Hall of Fame - See who loves wigs the most!">
+    <meta name="keywords" content="wigs, leaderboard, top spenders, wigikin">
+    <title>Top Spenders - Wigikin Hall of Fame</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,8 +16,8 @@
         <div class="header-content">
             <div class="logo">🎭 Wigikin</div>
             <nav class="nav-links">
-                <a href="index.html" class="nav-btn active">🏠 Shop</a>
-                <a href="leaderboard.html" class="nav-btn">🏆 Leaderboard</a>
+                <a href="index.html" class="nav-btn">🏠 Shop</a>
+                <a href="leaderboard.html" class="nav-btn active">🏆 Leaderboard</a>
             </nav>
             <nav class="social-links">
                 <a href="https://discord.gg/5Ea478mexz" target="_blank" class="social-btn">
@@ -50,90 +49,32 @@
                     YouTube
                 </a>
             </nav>
-            <button class="cart-btn" id="cartBtn" aria-label="Shopping Cart">
-                🛒
-                <span class="cart-count" id="cartCount">0</span>
-            </button>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Notification Banner -->
-        <div class="notification-banner">
-            <div class="notice-badge">⚠️ Notice</div>
-            <p>
-                <strong>Good news, guys! A lot of you tried to buy my last strand of hair.</strong><br>
-                Sadly, my last strand has grown
-                <span id="years">0</span> years,
-                <span id="months">0</span> months,
-                <span id="days">0</span> days,
-                <span id="hours">0</span> hours,
-                <span id="minutes">0</span> minutes, and
-                <span id="seconds">0</span> seconds ago.
-                <br><br>
-                <strong>The good news:</strong> I'll use the money from the sold-out last strand to grow new hair using
-                [REDACTED].
-                <br><br>
-                In the meantime, feel free to shop the other wigs — buying them may speed up the process.
-            </p>
-        </div>
-
+        <!-- Hero Section -->
         <section class="hero">
-            <h1>Welcome to Wigikin</h1>
-            <p>Discover the most hilarious and unique wigs in the universe. From rainbow explosions to legendary hair
-                strands!</p>
+            <h1>🏆 Top Spenders Hall of Fame</h1>
+            <p>Celebrating our most dedicated wig enthusiasts and their legendary purchases!</p>
         </section>
 
-        <!-- Products Grid -->
-        <section class="products-grid" id="productsGrid">
-            <!-- Products will be dynamically inserted here -->
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-page">
+            <div class="leaderboard-container" id="leaderboardContainer">
+                <div class="leaderboard-loading">Loading leaderboard...</div>
+            </div>
         </section>
     </main>
 
-    <!-- Cart Sidebar -->
-    <aside class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h2>Your Cart</h2>
-            <button class="close-cart" id="closeCart" aria-label="Close Cart">×</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <div class="empty-cart">
-                <div class="empty-cart-icon">🛒</div>
-                <p>Your cart is empty</p>
-            </div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cartTotal">$0.00</span>
-            </div>
-            <button class="checkout-btn" id="checkoutBtn" disabled>Checkout</button>
-        </div>
-    </aside>
-
-    <!-- Checkout Modal -->
-    <div class="modal" id="checkoutModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Checkout</h2>
-                <button class="close-modal" id="closeModal" aria-label="Close Modal">×</button>
-            </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
-                To complete your order, join the Discord channel, go to the #general channel and send the following
-                message:
-            </p>
-            <div class="checkout-message" id="checkoutMessage">
-                <!-- Message will be generated here -->
-            </div>
-            <button class="copy-btn" id="copyBtn">📋 Copy Message</button>
-            <a href="https://discord.gg/5Ea478mexz" target="_blank" class="discord-link">
-                Join Discord Server
-            </a>
-        </div>
-    </div>
-
     <script src="script.js"></script>
+    <script>
+        // Initialize only the leaderboard on this page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLeaderboard();
+        });
+    </script>
 </body>
 
 </html>

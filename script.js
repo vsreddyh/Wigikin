@@ -33,7 +33,8 @@ const products = [
         name: "Anikin's Hair Strand",
         description: "A strand of Ani's hair. It is said to be one of the only ten strands of hair Anikin had since birth.",
         price: 999.99,
-        image: "images/hair_strand.png"
+        image: "images/hair_strand.png",
+        outOfStock: true
     },
     {
         id: 6,
@@ -135,7 +136,70 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
     updateCartUI();
     setupEventListeners();
+    startCounter();
 });
+
+// Counter for notification banner
+function startCounter() {
+    // Start date: January 2, 2002 at 06:07:00
+    const startDate = new Date('2002-01-02T06:07:00');
+
+    function updateCounter() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        // Calculate time components
+        const seconds = Math.floor(diff / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+
+        // Calculate years and remaining days
+        let years = 0;
+        let months = 0;
+        let remainingDays = days;
+
+        // Calculate years
+        let tempDate = new Date(startDate);
+        while (tempDate.setFullYear(tempDate.getFullYear() + 1) <= now) {
+            years++;
+        }
+
+        // Reset to start date plus years
+        tempDate = new Date(startDate);
+        tempDate.setFullYear(tempDate.getFullYear() + years);
+
+        // Calculate months
+        while (tempDate.setMonth(tempDate.getMonth() + 1) <= now) {
+            months++;
+        }
+
+        // Reset to start date plus years and months
+        tempDate = new Date(startDate);
+        tempDate.setFullYear(tempDate.getFullYear() + years);
+        tempDate.setMonth(tempDate.getMonth() + months);
+
+        // Calculate remaining days
+        remainingDays = Math.floor((now - tempDate) / (1000 * 60 * 60 * 24));
+
+        // Calculate remaining hours, minutes, seconds
+        const remainingHours = hours % 24;
+        const remainingMinutes = minutes % 60;
+        const remainingSeconds = seconds % 60;
+
+        // Update DOM elements
+        document.getElementById('years').textContent = years;
+        document.getElementById('months').textContent = months;
+        document.getElementById('days').textContent = remainingDays;
+        document.getElementById('hours').textContent = remainingHours;
+        document.getElementById('minutes').textContent = remainingMinutes;
+        document.getElementById('seconds').textContent = remainingSeconds;
+    }
+
+    // Update immediately and then every second
+    updateCounter();
+    setInterval(updateCounter, 1000);
+}
 
 // Render Products
 function renderProducts() {
@@ -369,3 +433,70 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Load and Display Leaderboard
+async function loadLeaderboard() {
+    const container = document.getElementById('leaderboardContainer');
+
+    // Fallback data in case fetch fails (for local file:// usage)
+    const fallbackData = [
+        { "name": "Larry the G.O.A.T", "moneySpent": 999.99 },
+        { "name": "Just_SKY", "moneySpent": 220 },
+        { "name": "pawwwtressssss", "moneySpent": 134 },
+        { "name": "memeindemonttv", "moneySpent": 80 },
+        { "name": "Staxed", "moneySpent": 78 },
+        { "name": "tejbedara", "moneySpent": 72 },
+        { "name": "aurio_lul", "moneySpent": 71 },
+        { "name": "Ennods", "moneySpent": 60 },
+        { "name": "TioSmalls", "moneySpent": 57 },
+        { "name": "hakaiknows", "moneySpent": 26 },
+        { "name": "RainbowLover", "moneySpent": 1432.78 },
+        { "name": "AnikinFan#1", "moneySpent": 1299.99 },
+        { "name": "DiscoKing", "moneySpent": 987.65 },
+        { "name": "UnicornDreamer", "moneySpent": 845.50 },
+        { "name": "PunkRockQueen", "moneySpent": 723.44 },
+        { "name": "MermaidVibes", "moneySpent": 654.21 },
+        { "name": "CottonCandyFan", "moneySpent": 589.99 }
+    ];
+
+    let leaderboardData = fallbackData;
+
+    try {
+        const response = await fetch('./leaderboard.json');
+        if (response.ok) {
+            leaderboardData = await response.json();
+        }
+    } catch (error) {
+        console.log('Using fallback leaderboard data (fetch failed, likely due to CORS)');
+    }
+
+    // Sort by money spent (descending)
+    leaderboardData.sort((a, b) => b.moneySpent - a.moneySpent);
+
+    // Generate medal emojis for top 3
+    const getMedal = (rank) => {
+        if (rank === 1) return '🥇';
+        if (rank === 2) return '🥈';
+        if (rank === 3) return '🥉';
+        return `#${rank}`;
+    };
+
+    // Render leaderboard
+    const leaderboardHTML = `
+        <div class="leaderboard-list">
+            ${leaderboardData.map((entry, index) => {
+        const rank = index + 1;
+        const rankClass = rank <= 3 ? `rank-${rank}` : '';
+        return `
+                    <div class="leaderboard-item ${rankClass}">
+                        <div class="leaderboard-rank">${getMedal(rank)}</div>
+                        <div class="leaderboard-name">${entry.name}</div>
+                        <div class="leaderboard-amount">$${entry.moneySpent.toFixed(2)}</div>
+                    </div>
+                `;
+    }).join('')}
+        </div>
+    `;
+
+    container.innerHTML = leaderboardHTML;
+}
