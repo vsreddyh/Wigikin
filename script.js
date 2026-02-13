@@ -132,7 +132,7 @@ const products = [
         id: 17,
         name: "Bald cap",
         // description: "A wig but not a wig. Use this to impersonate anikin on Halloween.",
-        description: "Um we are already bald"
+        description: "Um we are already bald",
         price: 1.99,
         image: "images/bald_cap.webp",
         outOfStock: false
