@@ -447,13 +447,8 @@ async function loadLeaderboard() {
         { "name": "Ennods", "moneySpent": 60 },
         { "name": "TioSmalls", "moneySpent": 57 },
         { "name": "hakaiknows", "moneySpent": 26 },
-        { "name": "RainbowLover", "moneySpent": 1432.78 },
-        { "name": "AnikinFan#1", "moneySpent": 1299.99 },
-        { "name": "DiscoKing", "moneySpent": 987.65 },
-        { "name": "UnicornDreamer", "moneySpent": 845.50 },
-        { "name": "PunkRockQueen", "moneySpent": 723.44 },
-        { "name": "MermaidVibes", "moneySpent": 654.21 },
-        { "name": "CottonCandyFan", "moneySpent": 589.99 }
+        { "name": "boredgod256", "moneySpent": 7 },
+        { "name": "PetGoX", "moneySpent": 7 }
     ];
 
     let leaderboardData = fallbackData;
