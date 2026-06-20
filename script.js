@@ -13,32 +13,28 @@ const products = [
         name: "Rainbow Explosion",
         description: "A vibrant rainbow afro that'll make you the life of any party!",
         price: 29.99,
-        image: "images/rainbow_wig.png",
-        outOfStock: true
+        image: "images/rainbow_wig.png"
     },
     {
         id: 2,
         name: "The Unicorn Mane",
         description: "Magical pastel flowing locks that'll make you feel like a mythical creature!",
         price: 34.99,
-        image: "images/unicorn_wig.png",
-        outOfStock: true
+        image: "images/unicorn_wig.png"
     },
     {
         id: 3,
         name: "Einstein's Genius",
         description: "Wild white scientist hair - intelligence not included!",
         price: 27.99,
-        image: "images/einstein_wig.png",
-        outOfStock: true
+        image: "images/einstein_wig.png"
     },
     {
         id: 4,
         name: "Disco Fever",
         description: "Shimmering silver disco wig that'll transport you back to the 70s!",
         price: 32.99,
-        image: "images/disco_wig.png",
-        outOfStock: true
+        image: "images/disco_wig.png"
     },
     {
         id: 5,
@@ -53,86 +49,75 @@ const products = [
         name: "Neon Pink Punk Rock",
         description: "Hot pink mohawk that screams rebellion! Perfect for concerts or annoying your parents.",
         price: 31.99,
-        image: "images/neon_pink_punk.png",
-        outOfStock: true
+        image: "images/neon_pink_punk.png"
     },
     {
         id: 7,
         name: "Mermaid Ocean Waves",
         description: "Flowing teal and aqua locks straight from Atlantis. Fish not included!",
         price: 38.99,
-        image: "images/mermaid_ocean.png",
-        outOfStock: true
+        image: "images/mermaid_ocean.png"
     },
     {
         id: 8,
         name: "Clown Chaos",
         description: "Bright orange curly madness! Warning: May cause uncontrollable laughter or terror.",
         price: 24.99,
-        image: "images/clown_chaos.png",
-        outOfStock: true
+        image: "images/clown_chaos.png"
     },
     {
         id: 9,
         name: "Galactic Purple Haze",
         description: "Deep space purple with cosmic shimmer. NASA approved for moon parties!",
         price: 35.99,
-        image: "images/galactic_purple.png",
-        outOfStock: true
+        image: "images/galactic_purple.png"
     },
     {
         id: 10,
         name: "Toxic Waste Green",
         description: "Radioactive lime green that glows in the dark. Geiger counter sold separately!",
         price: 33.99,
-        image: "images/toxic_green.png",
-        outOfStock: true
+        image: "images/toxic_green.png"
     },
     {
         id: 11,
         name: "Cotton Candy Dreams",
         description: "Pink and blue swirled perfection. Tastes terrible, looks amazing!",
         price: 36.99,
-        image: "images/cotton_candy.png",
-        outOfStock: true
+        image: "images/cotton_candy.png"
     },
     {
         id: 12,
         name: "80s Metal Madness",
         description: "Long platinum blonde rocker hair. Air guitar skills not included but highly recommended!",
         price: 39.99,
-        image: "images/metal_madness.png",
-        outOfStock: true
+        image: "images/metal_madness.png"
     },
     {
         id: 14,
         name: "Sunshine Yellow",
         description: "Bright and cheerful yellow wig that radiates positivity. Be the sunshine!",
         price: 29.99,
-        image: "images/yellow_wig.png",
-        outOfStock: true
+        image: "images/yellow_wig.png"
     },
     {
         id: 15,
         name: "Chocolate Brown",
         description: "Rich chocolate brown wig with natural shine. Sweet as can be!",
         price: 27.99,
-        image: "images/brown_wig.png",
-        outOfStock: true
+        image: "images/brown_wig.png"
     },
     {
         id: 16,
         name: "Fiery Red",
         description: "Bold and vibrant red wig that turns heads. Unleash your inner fire!",
         price: 30.99,
-        image: "images/red_wig.png",
-        outOfStock: true
+        image: "images/red_wig.png"
     },
     {
         id: 17,
         name: "Bald cap",
-        // description: "A wig but not a wig. Use this to impersonate anikin on Halloween.",
-        description: "Um we are already bald"
+        description: "A wig but not a wig. Use this to impersonate anikin on Halloween ",
         price: 1.99,
         image: "images/bald_cap.webp",
         outOfStock: false
@@ -149,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartUI();
     setupEventListeners();
     startCounter();
-    setupCyborgTakeover();
 });
 
 // Counter for notification banner
@@ -512,16 +496,4 @@ async function loadLeaderboard() {
     `;
 
     container.innerHTML = leaderboardHTML;
-}
-
-// Cyborg Takeover Setup
-function setupCyborgTakeover() {
-    const cyborgTakeover = document.getElementById('cyborgTakeover');
-    const cyborgClose = document.getElementById('cyborgClose');
-
-    if (cyborgClose && cyborgTakeover) {
-        cyborgClose.addEventListener('click', () => {
-            cyborgTakeover.classList.add('hidden');
-        });
-    }
 }
