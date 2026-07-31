@@ -1,6 +1,14 @@
 // Product Data
 const products = [
     {
+        id: 18,
+        name: "Ani's Broken Spectacles",
+        description: "Light falling on Anikin's forehead was reflected and concentrated on the arm, burning it over 18 months. This spectacles is proof that Ani needs to wear wigs, otherwise he would be a MULTIDIRECTIONAL NUCLEAR LIGHT REFLECTING BALD LASER CANNON.",
+        price: 9999.99,
+        image: "images/ani_broken_spectacles.jpg",
+        outOfStock: false
+    },
+    {
         id: 1,
         name: "Classic Black Elegance",
         description: "Not in stock because Anikin always steals from the warehouse",
@@ -454,7 +462,7 @@ async function loadLeaderboard() {
     let leaderboardData = fallbackData;
 
     try {
-        const response = await fetch('./leaderboard.json');
+        const response = await fetch('/api/leaderboard');
         if (response.ok) {
             leaderboardData = await response.json();
         }

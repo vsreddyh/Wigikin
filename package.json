@@ -1,0 +1,13 @@
+{
+  "name": "wigikin",
+  "version": "1.0.0",
+  "description": "Wigikin - Premium Funny Wigs & Anikin's Hair Strand",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
