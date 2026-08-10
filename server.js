@@ -14,6 +14,10 @@ app.get('/leaderboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'leaderboard.html'));
 });
 
+app.get('/onlybalds', (req, res) => {
+    res.sendFile(path.join(__dirname, 'onlybalds.html'));
+});
+
 app.get('/api/leaderboard', (req, res) => {
     const fs = require('fs');
     const data = fs.readFileSync(path.join(__dirname, 'leaderboard.json'), 'utf-8');
