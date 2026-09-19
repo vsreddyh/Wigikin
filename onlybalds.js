@@ -185,7 +185,7 @@
         const sequence = [
             { heading: 'there are no pics here why are you here helldiver', gif: GIFS.reveal2 },
             { heading: 'why are you still here helldiver', gif: GIFS.reveal1 },
-            { heading: 'why are you still here helldiver', gif: GIFS.reveal3 }
+            { heading: 'why are you STILL here helldiver', gif: GIFS.reveal3 }
         ];
 
         let i = 0;
