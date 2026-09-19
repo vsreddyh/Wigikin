@@ -1,6 +1,6 @@
 // OnlyBalds - Multi-step captcha + reveal
 (function () {
-    const normalize = (s) => s.trim().toLowerCase();
+    const normalize = (s) => s.trim().toLowerCase().replace(/\s+/g, ' ').replace(/[.,!?;:'"]/g, '');
 
     const GIFS = {
         squidFail1: 'images/illuminate-typing.gif',
@@ -15,29 +15,29 @@
     };
 
     const answers = {
-        step1: 'voters are the most inteligent',
+        step1: 'in the first galactic war the squids pissed themselves seeing the power of super earth and escaped from galaxy',
         step2: 'terminids are bad',
         step3: 'binary'
     };
 
-    const failConfigs = {
-        step1: { heading: 'ILLUMINATE DETECTED', gif1: GIFS.squidFail1, gif2: GIFS.squidFail2 },
-        step2: { heading: 'TERMINID DETECTED', gif1: GIFS.bugFail1, gif2: GIFS.bugFail2 },
-        step3: { heading: 'AUTOMATON DETECTED', gif1: GIFS.botFail1, gif2: GIFS.botFail2 }
-    };
+    const stepOrder = ['step1', 'step2', 'step3'];
 
     const $ = (id) => document.getElementById(id);
     const steps = { step1: $('step1'), step2: $('step2'), step3: $('step3') };
     const card = $('captchaCard');
     const resultBox = $('captchaResult');
-    const resultHeading = $('resultHeading');
-    const resultGif = $('resultGif');
     const reveal = $('reveal');
     const revealHeading = $('revealHeading');
     const revealGif = $('revealGif');
     const boobikinStage = $('boobikinStage');
+    const progressFill = $('progressFill');
+    const progressDots = document.querySelectorAll('.pdot');
+    const verifyStatus = $('verifyStatus');
 
     let timeoutId = null;
+    let busy = false;
+    let cleared = 0;
+    let fails = 0;
 
     function clearTimer() {
         if (timeoutId) {
@@ -52,67 +52,118 @@
         el.style.animation = '';
     }
 
+    function updateProgress() {
+        const pct = (cleared / 3) * 100;
+        if (progressFill) progressFill.style.width = pct + '%';
+        progressDots.forEach((dot) => {
+            const n = Number(dot.dataset.dot);
+            dot.classList.toggle('done', n <= cleared);
+            dot.classList.toggle('active', n === cleared + 1);
+            dot.textContent = n <= cleared ? '✓' : String(n);
+        });
+        if (verifyStatus) {
+            if (cleared === 0) verifyStatus.innerHTML = 'Clearance <strong>0/3</strong> — prove your humanity, Helldiver.';
+            else if (cleared < 3) verifyStatus.innerHTML = `Clearance <strong>${cleared}/3</strong> — good work, keep going.`;
+        }
+    }
+
+    function showNote(stepName) {
+        const note = $(stepName + 'Note');
+        if (note && note.hidden) {
+            note.hidden = false;
+            bump(note);
+        }
+    }
+
+    function hideNote(stepName) {
+        const note = $(stepName + 'Note');
+        if (note) note.hidden = true;
+    }
+
+    function setError(stepName, msg) {
+        const err = $(stepName + 'Error');
+        if (err) {
+            err.classList.remove('step-success');
+            err.textContent = msg;
+        }
+        const input = $(stepName + 'Input');
+        if (input && msg) {
+            input.classList.add('input-error');
+            const stepEl = $(stepName);
+            stepEl.classList.remove('shake');
+            void stepEl.offsetWidth;
+            stepEl.classList.add('shake');
+        }
+    }
+
+    function setSuccess(stepName, msg) {
+        const err = $(stepName + 'Error');
+        if (err) {
+            err.classList.add('step-success');
+            err.textContent = msg;
+        }
+        const input = $(stepName + 'Input');
+        if (input) input.classList.remove('input-error');
+    }
+
+    function clearFeedback(stepName) {
+        const err = $(stepName + 'Error');
+        if (err) {
+            err.classList.remove('step-success');
+            err.textContent = '';
+        }
+        hideNote(stepName);
+        const input = $(stepName + 'Input');
+        if (input) input.classList.remove('input-error');
+    }
+
     function showStep(name) {
         clearTimer();
+        busy = false;
         resultBox.hidden = true;
         Object.keys(steps).forEach((key) => { steps[key].hidden = key !== name; });
+        updateProgress();
+        const stepEl = $(name);
+        if (stepEl) bump(stepEl);
         const input = $(name + 'Input');
+        clearFeedback(name);
         input.value = '';
-        input.focus();
-    }
-
-    // Show a full-screen warning screen with the text, then the gif below/after.
-    function showWarningThenGif(headingEl, gifEl, heading, gifSrc, onGifShown) {
-        headingEl.textContent = heading;
-        headingEl.classList.remove('correct');
-        headingEl.hidden = false;
-        gifEl.hidden = true;
-        bump(headingEl);
-        timeoutId = setTimeout(() => {
-            headingEl.hidden = true;
-            if (gifSrc) {
-                gifEl.src = gifSrc;
-                gifEl.hidden = false;
-                bump(gifEl);
-            }
-            if (onGifShown) onGifShown();
-        }, 1500);
-    }
-
-    function showResult(heading, gifSrc, onGifShown) {
-        Object.keys(steps).forEach((key) => { steps[key].hidden = true; });
-        resultBox.hidden = false;
-        showWarningThenGif(resultHeading, resultGif, heading, gifSrc, onGifShown);
+        // focus after paint so mobile keyboards behave
+        setTimeout(() => input.focus(), 60);
     }
 
     function failStep(stepName) {
-        const cfg = failConfigs[stepName];
-        showResult(cfg.heading, cfg.gif1, () => {
-            timeoutId = setTimeout(() => {
-                resultGif.src = cfg.gif2;
-                bump(resultGif);
-                timeoutId = setTimeout(() => {
-                    showStep('step1');
-                }, 2200);
-            }, 2200);
-        });
+        fails++;
+        // Reveal the step's warning note only now — not upfront.
+        showNote(stepName);
+        setError(stepName, '✗ Verification failed. Expelling to shop…');
+        busy = true;
+        timeoutId = setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1400);
     }
 
     function correctStep(next) {
-        Object.keys(steps).forEach((key) => { steps[key].hidden = true; });
-        resultHeading.hidden = true;
-        resultGif.hidden = true;
-        resultBox.hidden = false;
+        busy = true;
+        cleared = Math.max(cleared, stepOrder.indexOf(next));
+        // if next is step2, cleared=1; step3 -> 2
+        setSuccess(stepOrder[cleared - 1] || 'step1', '✓ Identity confirmed. Advancing…');
+        updateProgress();
         timeoutId = setTimeout(() => {
             showStep(next);
-        }, 700);
+        }, 850);
     }
 
     function checkAnswer(stepName, nextStep) {
+        if (busy) return;
         const input = $(stepName + 'Input');
         if (normalize(input.value) === answers[stepName]) {
             if (nextStep === 'reveal') {
-                startReveal();
+                busy = true;
+                cleared = 3;
+                updateProgress();
+                setSuccess(stepName, '✓ Final check passed. Decrypting…');
+                timeoutId = setTimeout(startReveal, 850);
             } else {
                 correctStep(nextStep);
             }
@@ -123,6 +174,8 @@
 
     // --- Reveal sequence ---
     function startReveal() {
+        clearTimer();
+        busy = false;
         card.hidden = true;
         reveal.hidden = false;
         revealGif.hidden = false;
@@ -176,8 +229,8 @@
             video.play().catch(() => {});
         });
 
-        // Autoplay with sound is blocked without a user gesture (esp. in the
-        // TEMP bypass). Start muted, then unmute on the first interaction.
+        // Autoplay with sound is blocked without a user gesture.
+        // Start muted, then unmute on the first interaction.
         tryPlay();
         const unmute = () => {
             video.muted = false;
@@ -204,13 +257,21 @@
         });
     }
 
-    // --- Watch Now gate ---
+    // --- Watch Now gate -> briefing middle page ---
     $('watchNowBtn').addEventListener('click', () => {
         const hero = $('obHero');
-        hero.remove();
+        if (hero) hero.remove();
         $('obHeader').hidden = false;
+        $('briefingCard').hidden = false;
+        updateProgress();
+        $('continueBtn').focus();
+    });
+
+    // --- Continue -> start Q1 ---
+    $('continueBtn').addEventListener('click', () => {
+        $('briefingCard').hidden = true;
         card.hidden = false;
-        steps.step1.querySelector('input').focus();
+        showStep('step1');
     });
 
     // --- Wire up buttons ---
@@ -219,19 +280,25 @@
     $('step3Btn').addEventListener('click', () => checkAnswer('step3', 'reveal'));
 
     ['step1', 'step2', 'step3'].forEach((name) => {
-        $(name + 'Input').addEventListener('keydown', (e) => {
+        const input = $(name + 'Input');
+        input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 $(name + 'Btn').click();
             }
         });
+        input.addEventListener('input', () => {
+            input.classList.remove('input-error');
+        });
     });
 
-    // TEMP: skip straight to phase 5
-    (function showPhase5Directly() {
-        const hero = $('obHero');
-        if (hero) hero.remove();
-        $('obHeader').hidden = false;
-        card.hidden = true;
-        startReveal();
-    })();
+    // --- Prompt text is uncopyable: block copy / cut / selection grabbing ---
+    document.querySelectorAll('.captcha-prompt.no-select').forEach((el) => {
+        el.setAttribute('unselectable', 'on');
+        el.setAttribute('aria-hidden', 'true');
+        el.addEventListener('copy', (e) => e.preventDefault());
+        el.addEventListener('cut', (e) => e.preventDefault());
+        el.addEventListener('contextmenu', (e) => e.preventDefault());
+        el.addEventListener('selectstart', (e) => e.preventDefault());
+        el.addEventListener('mousedown', (e) => { if (window.getSelection) window.getSelection().removeAllRanges(); });
+    });
 })();

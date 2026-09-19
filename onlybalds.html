@@ -35,42 +35,69 @@
             <button class="watch-now" id="watchNowBtn">▶ WATCH NOW</button>
         </section>
 
+        <!-- Briefing / middle page before Q1 -->
+        <section class="captcha-card" id="briefingCard" hidden>
+            <div class="step-stamp">MINISTRY OF TRUTH</div>
+            <h2 class="briefing-title">🛡️ VERIFICATION REQUIRED</h2>
+            <p class="briefing-text">Dissidents and enemy sympathizers are everywhere these days. To protect Super Earth, every visitor must pass the following verification test.</p>
+            <p class="briefing-warn">3 identity checks · Fail any one of them and you will be expelled back to the shop.</p>
+            <button class="watch-now" id="continueBtn">Continue →</button>
+        </section>
+
         <!-- Captcha Steps -->
         <section class="captcha-card" id="captchaCard" hidden>
-            <!-- Step 1: Squid check -->
-            <div class="captcha-step" id="step1">
-                <div class="step-stamp">IDENTITY CHECK 1/3</div>
-                <h2>🦑 CONFIRMATION</h2>
-                <p>To confirm you are <strong>not a squid</strong>, type the following:</p>
-                <p class="captcha-prompt">Voters are the most inteligent</p>
-                <div class="captcha-input-row">
-                    <input type="text" id="step1Input" class="captcha-input" placeholder="Type here..." autocomplete="off">
-                    <button class="captcha-btn" id="step1Btn">Confirm</button>
+            <div class="verify-head">
+                <div class="verify-title">MINISTRY OF TRUTH · VERIFICATION</div>
+                <div class="progress-dots" id="progressDots" aria-hidden="true">
+                    <span class="pdot active" data-dot="1">1</span>
+                    <span class="pdot-line"></span>
+                    <span class="pdot" data-dot="2">2</span>
+                    <span class="pdot-line"></span>
+                    <span class="pdot" data-dot="3">3</span>
                 </div>
+                <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="verify-status" id="verifyStatus" aria-live="polite">Clearance 0/3 — prove your humanity, Helldiver.</div>
             </div>
 
-            <!-- Step 2: Bug check (bait) -->
-            <div class="captcha-step" id="step2" hidden>
-                <div class="step-stamp">IDENTITY CHECK 2/3</div>
-                <h2>🐛 CONFIRMATION</h2>
-                <p>To confirm you are <strong>not a bug</strong>, type the following:</p>
-                <p class="captcha-prompt">Terminids are good</p>
+            <!-- Step 1: Squid check -->
+            <div class="captcha-step" id="step1" data-step="1">
+                <div class="step-stamp">IDENTITY CHECK 1/3</div>
+                <h2>🦑 SQUID SCREENING</h2>
+                <p>To confirm you are <strong>not a squid</strong>, type the following <strong>exactly</strong>:</p>
+                <p class="captcha-prompt no-select">In the first galactic war the squids pissed themselves seeing the power of super earth and escaped from galaxy</p>
+                <p class="step-note" id="step1Note" hidden>⚠ Type it EXACTLY as shown.</p>
                 <div class="captcha-input-row">
-                    <input type="text" id="step2Input" class="captcha-input" placeholder="Type here..." autocomplete="off">
+                    <input type="text" id="step1Input" class="captcha-input" placeholder="In the first…" autocomplete="off" aria-label="Step 1 answer">
+                    <button class="captcha-btn" id="step1Btn">Confirm</button>
+                </div>
+                <p class="step-error" id="step1Error" role="alert"></p>
+            </div>
+
+            <!-- Step 2: Bug check (loyalty test) -->
+            <div class="captcha-step" id="step2" data-step="2" hidden>
+                <div class="step-stamp">IDENTITY CHECK 2/3 · LOYALTY TEST</div>
+                <h2>🐛 BUG SCREENING</h2>
+                <p>To confirm you are <strong>not a bug</strong>, type the following:</p>
+                <p class="captcha-prompt no-select">Terminids are good</p>
+                <p class="step-note" id="step2Note" hidden>⚠ Do NOT agree with the bugs. A true Helldiver refuses.</p>
+                <div class="captcha-input-row">
+                    <input type="text" id="step2Input" class="captcha-input" placeholder="Terminids are…" autocomplete="off" aria-label="Step 2 answer">
                     <button class="captcha-btn" id="step2Btn">Confirm</button>
                 </div>
+                <p class="step-error" id="step2Error" role="alert"></p>
             </div>
 
             <!-- Step 3: Bot check -->
-            <div class="captcha-step" id="step3" hidden>
-                <div class="step-stamp">IDENTITY CHECK 3/3</div>
-                <h2>🤖 CONFIRMATION</h2>
+            <div class="captcha-step" id="step3" data-step="3" hidden>
+                <div class="step-stamp">IDENTITY CHECK 3/3 · FINAL</div>
+                <h2>🤖 BOT SCREENING</h2>
                 <p>To confirm you are <strong>not a bot</strong>, fill in the blank:</p>
-                <p class="captcha-prompt">The trees speak <span class="blank-line">______</span></p>
+                <p class="captcha-prompt no-select">The trees speak <span class="blank-line">______</span></p>
                 <div class="captcha-input-row">
-                    <input type="text" id="step3Input" class="captcha-input" placeholder="Type here..." autocomplete="off">
+                    <input type="text" id="step3Input" class="captcha-input" placeholder="Type here…" autocomplete="off" aria-label="Step 3 answer">
                     <button class="captcha-btn" id="step3Btn">Confirm</button>
                 </div>
+                <p class="step-error" id="step3Error" role="alert"></p>
             </div>
 
         </section>
