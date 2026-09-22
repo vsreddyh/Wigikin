@@ -22,10 +22,18 @@
 
     const stepOrder = ['step1', 'step2', 'step3'];
 
+    const failConfigs = {
+        step1: { heading: 'ILLUMINATE DETECTED', gif1: GIFS.squidFail1, gif2: GIFS.squidFail2 },
+        step2: { heading: 'TERMINID DETECTED', gif1: GIFS.bugFail1, gif2: GIFS.bugFail2 },
+        step3: { heading: 'AUTOMATON DETECTED', gif1: GIFS.botFail1, gif2: GIFS.botFail2 }
+    };
+
     const $ = (id) => document.getElementById(id);
     const steps = { step1: $('step1'), step2: $('step2'), step3: $('step3') };
     const card = $('captchaCard');
     const resultBox = $('captchaResult');
+    const resultHeading = $('resultHeading');
+    const resultGif = $('resultGif');
     const reveal = $('reveal');
     const revealHeading = $('revealHeading');
     const revealGif = $('revealGif');
@@ -132,15 +140,50 @@
         setTimeout(() => input.focus(), 60);
     }
 
+    // Show a full-screen warning heading, then swap to the gif.
+    function showWarningThenGif(headingEl, gifEl, heading, gifSrc, onGifShown) {
+        headingEl.textContent = heading;
+        headingEl.classList.remove('correct');
+        headingEl.hidden = false;
+        gifEl.hidden = true;
+        bump(headingEl);
+        timeoutId = setTimeout(() => {
+            headingEl.hidden = true;
+            if (gifSrc) {
+                gifEl.src = gifSrc;
+                gifEl.hidden = false;
+                bump(gifEl);
+            }
+            if (onGifShown) onGifShown();
+        }, 1500);
+    }
+
+    function showResult(heading, gifSrc, onGifShown) {
+        Object.keys(steps).forEach((key) => { steps[key].hidden = true; });
+        resultBox.hidden = false;
+        showWarningThenGif(resultHeading, resultGif, heading, gifSrc, onGifShown);
+    }
+
     function failStep(stepName) {
+        const cfg = failConfigs[stepName];
         fails++;
         // Reveal the step's warning note only now — not upfront.
         showNote(stepName);
-        setError(stepName, '✗ Verification failed. Expelling to shop…');
+        setError(stepName, '✗ Verification failed. Showing evidence…');
         busy = true;
+        // Brief beat so the user sees the error, then play the fail gifs,
+        // then expel back to the shop.
         timeoutId = setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1400);
+            showResult(cfg.heading, cfg.gif1, () => {
+                timeoutId = setTimeout(() => {
+                    resultGif.src = cfg.gif2;
+                    bump(resultGif);
+                    timeoutId = setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2200);
+                }, 2200);
+            });
+        }, 900);
     }
 
     function correctStep(next) {
@@ -289,6 +332,9 @@
         input.addEventListener('input', () => {
             input.classList.remove('input-error');
         });
+        // All captcha inputs must be typed manually — block paste/drop.
+        input.addEventListener('paste', (e) => e.preventDefault());
+        input.addEventListener('drop', (e) => e.preventDefault());
     });
 
     // --- Prompt text is uncopyable: block copy / cut / selection grabbing ---
